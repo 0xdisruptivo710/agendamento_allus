@@ -27,7 +27,7 @@ export function useAnamneses() {
   return useQuery({
     queryKey: ["anamneses"],
     queryFn: async () => {
-      // @ts-expect-error - tabela criada via migration manual
+      // @ts-ignore - tabela criada via SQL manual
       const { data, error } = await supabase.from(TABLE).select("*").order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Anamnese[];
@@ -39,7 +39,7 @@ export function useUpsertAnamnese() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (input: Partial<Anamnese>) => {
-      // @ts-expect-error - tabela criada via migration manual
+      // @ts-ignore - tabela criada via SQL manual
       const q = input.id ? supabase.from(TABLE).update(input).eq("id", input.id).select().maybeSingle() : supabase.from(TABLE).insert(input).select().maybeSingle();
       const { data, error } = await q;
       if (error) throw error;
@@ -53,7 +53,7 @@ export function useDeleteAnamnese() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      // @ts-expect-error - tabela criada via migration manual
+      // @ts-ignore - tabela criada via SQL manual
       const { error } = await supabase.from(TABLE).delete().eq("id", id);
       if (error) throw error;
     },

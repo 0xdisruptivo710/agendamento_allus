@@ -31,7 +31,7 @@ export function useAcompanhamentos() {
   return useQuery({
     queryKey: ["acompanhamentos"],
     queryFn: async () => {
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const { data, error } = await supabase.from(T_ACOMP).select("*").order("created_at", { ascending: false });
       if (error) throw error;
       return (data ?? []) as Acompanhamento[];
@@ -44,7 +44,7 @@ export function useAcompanhamentoFotos(acompanhamentoId: number | null) {
     queryKey: ["acompanhamento-fotos", acompanhamentoId],
     enabled: !!acompanhamentoId,
     queryFn: async () => {
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const { data, error } = await supabase.from(T_FOTOS).select("*").eq("acompanhamento_id", acompanhamentoId).order("created_at", { ascending: true });
       if (error) throw error;
       return (data ?? []) as AcompanhamentoFoto[];
@@ -56,7 +56,7 @@ export function useUpsertAcompanhamento() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (input: Partial<Acompanhamento>) => {
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const q = input.id ? supabase.from(T_ACOMP).update(input).eq("id", input.id).select().maybeSingle() : supabase.from(T_ACOMP).insert(input).select().maybeSingle();
       const { data, error } = await q;
       if (error) throw error;
@@ -70,7 +70,7 @@ export function useDeleteAcompanhamento() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: number) => {
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const { error } = await supabase.from(T_ACOMP).delete().eq("id", id);
       if (error) throw error;
     },
@@ -87,7 +87,7 @@ export function useUploadFoto() {
       const { error: upErr } = await supabase.storage.from(BUCKET).upload(path, file, { cacheControl: "3600", upsert: false });
       if (upErr) throw upErr;
       const { data: pub } = supabase.storage.from(BUCKET).getPublicUrl(path);
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const { data, error } = await supabase.from(T_FOTOS).insert({
         acompanhamento_id: acompanhamentoId,
         foto_url: pub.publicUrl,
@@ -108,7 +108,7 @@ export function useDeleteFoto() {
       if (foto.foto_path) {
         await supabase.storage.from(BUCKET).remove([foto.foto_path]);
       }
-      // @ts-expect-error tabela manual
+      // @ts-ignore - tabela criada via SQL manual
       const { error } = await supabase.from(T_FOTOS).delete().eq("id", foto.id);
       if (error) throw error;
     },
