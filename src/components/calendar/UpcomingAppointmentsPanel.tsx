@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { motion } from "framer-motion";
-import { Clock3, StickyNote, UserRound } from "lucide-react";
+import { Clock3, Sparkles, StickyNote, UserRound } from "lucide-react";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { formatAgendamentoTime, isUpcomingAgendamento, parseAgendamentoDate } from "@/lib/agendamento-date";
 
@@ -65,6 +65,13 @@ export function UpcomingAppointmentsPanel({ agendamentos, onEventClick }: Upcomi
                   <StickyNote className="mt-0.5 h-3.5 w-3.5 text-green-400" />
                   <span className="line-clamp-2">{event.Anotações || "Clique para adicionar anotações."}</span>
                 </div>
+
+                {event.Procedimento && (
+                  <div className="mt-2 inline-flex items-center gap-1 rounded-full bg-green-400/15 px-2 py-0.5 text-[10px] font-semibold text-green-500">
+                    <Sparkles className="h-3 w-3" />
+                    <span className="truncate">{event.Procedimento}</span>
+                  </div>
+                )}
               </motion.button>
             );
           })
