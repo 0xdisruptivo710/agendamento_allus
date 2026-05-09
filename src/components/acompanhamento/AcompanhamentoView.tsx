@@ -110,6 +110,9 @@ export function AcompanhamentoView() {
                 <div className="mb-2 flex items-start justify-between gap-2">
                   <div>
                     <p className="text-sm font-bold text-foreground">{a.paciente_nome || "Sem nome"}</p>
+                    {a.paciente_telefone && (
+                      <p className="text-[11px] text-primary">{a.paciente_telefone}</p>
+                    )}
                     <p className="text-[11px] text-muted-foreground">
                       Início: {a.data_inicio ? format(new Date(a.data_inicio + "T00:00:00"), "dd/MM/yyyy", { locale: ptBR }) : "—"}
                     </p>
