@@ -5,8 +5,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarSign, UserCog, Stethoscope, ClipboardList, Sparkles } from "lucide-react";
+import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarSign, UserCog, Stethoscope, ClipboardList, Sparkles, Camera } from "lucide-react";
 import { ProcedimentoCombobox } from "./ProcedimentoCombobox";
+import { AnamneseFormDialog } from "@/components/anamnese/AnamneseFormDialog";
 import { motion } from "framer-motion";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { useUpdateAgendamento } from "@/hooks/useAgendamentos";
@@ -37,6 +38,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
   const [respAtendimento, setRespAtendimento] = useState("");
   const [tipo, setTipo] = useState<string>("");
   const [procedimento, setProcedimento] = useState<string>("");
+  const [anamneseOpen, setAnamneseOpen] = useState(false);
   const updateMutation = useUpdateAgendamento();
   const { agendamento: respAgList, atendimento: respAtList } = useResponsaveis();
 
@@ -217,8 +219,22 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
               <Save className="mr-2 h-4 w-4" />
               {updateMutation.isPending ? "Salvando..." : "Salvar alterações"}
             </Button>
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <Button type="button" variant="outline" onClick={() => setAnamneseOpen(true)}>
+                <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
+              </Button>
+              <Button type="button" variant="outline" onClick={() => { onOpenChange(false); toast.info("Abra a aba Acompanhamento para gerenciar fotos."); }}>
+                <Camera className="mr-2 h-4 w-4" /> Acompanhamento
+              </Button>
+            </div>
           </div>
         </motion.div>
+        <AnamneseFormDialog
+          open={anamneseOpen}
+          onOpenChange={setAnamneseOpen}
+          agendamentoId={event.id}
+          pacienteNome={event.Nome}
+        />
       </DialogContent>
     </Dialog>
   );

@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import { addDays, addMonths, addWeeks, isToday, subDays, subMonths, subWeeks } from "date-fns";
 import { motion } from "framer-motion";
-import { AlertCircle, BarChart3, CalendarDays, CheckCircle, Loader2, Users, UserCog } from "lucide-react";
+import { AlertCircle, BarChart3, CalendarDays, Camera, CheckCircle, ClipboardList, Loader2, Users, UserCog } from "lucide-react";
+import { AnamneseView } from "@/components/anamnese/AnamneseView";
+import { AcompanhamentoView } from "@/components/acompanhamento/AcompanhamentoView";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarHeader } from "@/components/calendar/CalendarHeader";
 import { DayView } from "@/components/calendar/DayView";
@@ -96,6 +98,12 @@ const Index = () => {
             <TabsTrigger value="responsaveis" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <UserCog className="mr-2 h-4 w-4" /> Responsáveis
             </TabsTrigger>
+            <TabsTrigger value="anamnese" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
+            </TabsTrigger>
+            <TabsTrigger value="acompanhamento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <Camera className="mr-2 h-4 w-4" /> Acompanhamento
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="agenda" className="space-y-6 mt-0">
@@ -125,6 +133,14 @@ const Index = () => {
 
           <TabsContent value="responsaveis" className="mt-0">
             <ResponsaveisView />
+          </TabsContent>
+
+          <TabsContent value="anamnese" className="mt-0">
+            <AnamneseView />
+          </TabsContent>
+
+          <TabsContent value="acompanhamento" className="mt-0">
+            <AcompanhamentoView />
           </TabsContent>
         </Tabs>
 
