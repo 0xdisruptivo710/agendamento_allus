@@ -21,6 +21,7 @@ const Index = () => {
   const [view, setView] = useState<"month" | "week" | "day">("month");
   const [selectedEvent, setSelectedEvent] = useState<Agendamento | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("agenda");
   const { data: agendamentos, isLoading } = useAgendamentos();
 
   const handlePrev = () => {
@@ -87,24 +88,30 @@ const Index = () => {
           ))}
         </motion.div>
 
-        <Tabs defaultValue="agenda" className="w-full">
-          <TabsList className="mb-4 bg-card border border-border">
-            <TabsTrigger value="agenda" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <CalendarDays className="mr-2 h-4 w-4" /> Agenda
-            </TabsTrigger>
-            <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <BarChart3 className="mr-2 h-4 w-4" /> Relatórios
-            </TabsTrigger>
-            <TabsTrigger value="responsaveis" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <UserCog className="mr-2 h-4 w-4" /> Responsáveis
-            </TabsTrigger>
-            <TabsTrigger value="anamnese" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
-            </TabsTrigger>
-            <TabsTrigger value="acompanhamento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
-              <Camera className="mr-2 h-4 w-4" /> Acompanhamento
-            </TabsTrigger>
-          </TabsList>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="flex items-center justify-between mb-4">
+            <TabsList className="bg-card border border-border">
+              <TabsTrigger value="agenda" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <CalendarDays className="mr-2 h-4 w-4" /> Agenda
+              </TabsTrigger>
+              <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <BarChart3 className="mr-2 h-4 w-4" /> Relatórios
+              </TabsTrigger>
+              <TabsTrigger value="anamnese" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
+              </TabsTrigger>
+              <TabsTrigger value="acompanhamento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                <Camera className="mr-2 h-4 w-4" /> Acompanhamento
+              </TabsTrigger>
+            </TabsList>
+            <button
+              onClick={() => setActiveTab("responsaveis")}
+              title="Responsáveis"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              <UserCog className="h-4 w-4" />
+            </button>
+          </div>
 
           <TabsContent value="agenda" className="space-y-6 mt-0">
             <CalendarHeader
