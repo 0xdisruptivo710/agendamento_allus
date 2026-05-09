@@ -64,6 +64,9 @@ export function AnamneseView() {
               <div className="mb-2 flex items-start justify-between gap-2">
                 <div>
                   <p className="text-sm font-bold text-foreground">{a.paciente_nome || "Sem nome"}</p>
+                  {a.paciente_telefone && (
+                    <p className="text-[11px] text-primary">{a.paciente_telefone}</p>
+                  )}
                   <p className="text-[11px] text-muted-foreground">
                     {a.data_anamnese ? format(new Date(a.data_anamnese + "T00:00:00"), "dd 'de' MMMM yyyy", { locale: ptBR }) : "—"}
                   </p>
