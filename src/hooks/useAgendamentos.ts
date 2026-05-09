@@ -16,6 +16,7 @@ export interface Agendamento {
   Responsavel_Agendamento: string | null;
   Responsavel_Atendimento: string | null;
   Tipo: string | null;
+  Procedimento: string | null;
 }
 
 export function useAgendamentos() {

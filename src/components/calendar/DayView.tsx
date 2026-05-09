@@ -1,7 +1,7 @@
 import { format, isSameDay } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { motion } from "framer-motion";
-import { CalendarDays, Phone, User, CheckCircle, AlertCircle, Clock } from "lucide-react";
+import { CalendarDays, Phone, User, CheckCircle, AlertCircle, Clock, Sparkles } from "lucide-react";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { formatAgendamentoTime, parseAgendamentoDate } from "@/lib/agendamento-date";
 
@@ -71,6 +71,12 @@ export function DayView({ currentDate, agendamentos, onEventClick }: DayViewProp
                     <div className="mb-1 flex items-center gap-2">
                       <Phone className="h-3 w-3 text-muted-foreground" />
                       <span className="text-xs text-muted-foreground">{event["Número"]}</span>
+                    </div>
+                  )}
+                  {event.Procedimento && (
+                    <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-green-400/15 px-2 py-0.5 text-[10px] font-semibold text-green-500">
+                      <Sparkles className="h-3 w-3" />
+                      <span>{event.Procedimento}</span>
                     </div>
                   )}
                   {event.Anotações && <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">{event.Anotações}</p>}

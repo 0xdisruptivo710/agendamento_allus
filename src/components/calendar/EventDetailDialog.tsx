@@ -5,7 +5,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarSign, UserCog, Stethoscope, ClipboardList } from "lucide-react";
+import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarSign, UserCog, Stethoscope, ClipboardList, Sparkles } from "lucide-react";
+import { ProcedimentoCombobox } from "./ProcedimentoCombobox";
 import { motion } from "framer-motion";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { useUpdateAgendamento } from "@/hooks/useAgendamentos";
@@ -35,6 +36,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
   const [respAgendamento, setRespAgendamento] = useState("");
   const [respAtendimento, setRespAtendimento] = useState("");
   const [tipo, setTipo] = useState<string>("");
+  const [procedimento, setProcedimento] = useState<string>("");
   const updateMutation = useUpdateAgendamento();
   const { agendamento: respAgList, atendimento: respAtList } = useResponsaveis();
 
@@ -45,6 +47,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
       setRespAgendamento(event.Responsavel_Agendamento || "");
       setRespAtendimento(event.Responsavel_Atendimento || "");
       setTipo(event.Tipo || "");
+      setProcedimento(event.Procedimento || "");
     }
   }, [event]);
 
@@ -69,6 +72,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
           Responsavel_Agendamento: respAgendamento || null,
           Responsavel_Atendimento: respAtendimento || null,
           Tipo: tipo || null,
+          Procedimento: procedimento || null,
         },
       });
       toast.success("Agendamento atualizado!");
@@ -178,6 +182,13 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <Label className="flex items-center gap-2 text-xs font-semibold text-foreground">
+              <Sparkles className="h-3.5 w-3.5 text-green-400" /> Procedimento realizado
+            </Label>
+            <ProcedimentoCombobox value={procedimento} onChange={setProcedimento} />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
