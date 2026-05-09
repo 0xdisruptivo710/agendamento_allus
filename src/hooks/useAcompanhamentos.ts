@@ -6,6 +6,7 @@ export interface Acompanhamento {
   created_at: string;
   agendamento_id: number | null;
   paciente_nome: string | null;
+  paciente_telefone: string | null;
   data_inicio: string | null;
   data_fim_tratamento: string | null;
   status: string | null;

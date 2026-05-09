@@ -6,6 +6,7 @@ export interface Anamnese {
   created_at: string;
   agendamento_id: number | null;
   paciente_nome: string | null;
+  paciente_telefone: string | null;
   data_anamnese: string | null;
   queixa_principal: string | null;
   historico_saude: string | null;
