@@ -9,6 +9,7 @@ import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarS
 import { motion } from "framer-motion";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { useUpdateAgendamento } from "@/hooks/useAgendamentos";
+import { useResponsaveis } from "@/hooks/useResponsaveis";
 import { parseAgendamentoDate } from "@/lib/agendamento-date";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -35,6 +36,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
   const [respAtendimento, setRespAtendimento] = useState("");
   const [tipo, setTipo] = useState<string>("");
   const updateMutation = useUpdateAgendamento();
+  const { agendamento: respAgList, atendimento: respAtList } = useResponsaveis();
 
   useEffect(() => {
     if (event) {
@@ -150,23 +152,31 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
               <Label className="flex items-center gap-2 text-xs font-semibold text-foreground">
                 <UserCog className="h-3.5 w-3.5 text-green-400" /> Resp. agendamento
               </Label>
-              <Input
-                value={respAgendamento}
-                onChange={(e) => setRespAgendamento(e.target.value)}
-                placeholder="Quem agendou"
-                className="border-border bg-secondary/50"
-              />
+              <Select value={respAgendamento} onValueChange={setRespAgendamento}>
+                <SelectTrigger className="border-border bg-secondary/50">
+                  <SelectValue placeholder={respAgList.length ? "Selecione..." : "Cadastre na aba Responsáveis"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {respAgList.map((r) => (
+                    <SelectItem key={r.id} value={r.nome}>{r.nome}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1.5">
               <Label className="flex items-center gap-2 text-xs font-semibold text-foreground">
                 <Stethoscope className="h-3.5 w-3.5 text-green-400" /> Resp. atendimento
               </Label>
-              <Input
-                value={respAtendimento}
-                onChange={(e) => setRespAtendimento(e.target.value)}
-                placeholder="Quem atenderá"
-                className="border-border bg-secondary/50"
-              />
+              <Select value={respAtendimento} onValueChange={setRespAtendimento}>
+                <SelectTrigger className="border-border bg-secondary/50">
+                  <SelectValue placeholder={respAtList.length ? "Selecione..." : "Cadastre na aba Responsáveis"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {respAtList.map((r) => (
+                    <SelectItem key={r.id} value={r.nome}>{r.nome}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
