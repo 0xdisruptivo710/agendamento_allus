@@ -219,8 +219,22 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
               <Save className="mr-2 h-4 w-4" />
               {updateMutation.isPending ? "Salvando..." : "Salvar alterações"}
             </Button>
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <Button type="button" variant="outline" onClick={() => setAnamneseOpen(true)}>
+                <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
+              </Button>
+              <Button type="button" variant="outline" onClick={() => { onOpenChange(false); toast.info("Abra a aba Acompanhamento para gerenciar fotos."); }}>
+                <Camera className="mr-2 h-4 w-4" /> Acompanhamento
+              </Button>
+            </div>
           </div>
         </motion.div>
+        <AnamneseFormDialog
+          open={anamneseOpen}
+          onOpenChange={setAnamneseOpen}
+          agendamentoId={event.id}
+          pacienteNome={event.Nome}
+        />
       </DialogContent>
     </Dialog>
   );
