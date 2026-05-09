@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { User, Phone, CheckCircle, Clock, AlertCircle, Save, StickyNote, DollarSign, UserCog, Stethoscope, ClipboardList, Sparkles, Camera } from "lucide-react";
 import { ProcedimentoCombobox } from "./ProcedimentoCombobox";
 import { AnamneseFormDialog } from "@/components/anamnese/AnamneseFormDialog";
+import { AcompanhamentoDetailDialog } from "@/components/acompanhamento/AcompanhamentoDetailDialog";
+import { useAcompanhamentos, useUpsertAcompanhamento, type Acompanhamento } from "@/hooks/useAcompanhamentos";
 import { motion } from "framer-motion";
 import type { Agendamento } from "@/hooks/useAgendamentos";
 import { useUpdateAgendamento } from "@/hooks/useAgendamentos";
@@ -39,8 +41,12 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
   const [tipo, setTipo] = useState<string>("");
   const [procedimento, setProcedimento] = useState<string>("");
   const [anamneseOpen, setAnamneseOpen] = useState(false);
+  const [acompOpen, setAcompOpen] = useState(false);
+  const [acompSelected, setAcompSelected] = useState<Acompanhamento | null>(null);
   const updateMutation = useUpdateAgendamento();
   const { agendamento: respAgList, atendimento: respAtList } = useResponsaveis();
+  const { data: acompList = [] } = useAcompanhamentos();
+  const upsertAcomp = useUpsertAcompanhamento();
 
   useEffect(() => {
     if (event) {
@@ -80,6 +86,32 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
       toast.success("Agendamento atualizado!");
     } catch {
       toast.error("Erro ao salvar");
+    }
+  };
+
+  const handleOpenAcompanhamento = async () => {
+    if (!event) return;
+    const existing = acompList.find((a) => a.agendamento_id === event.id);
+    if (existing) {
+      setAcompSelected(existing);
+      setAcompOpen(true);
+      return;
+    }
+    try {
+      const created = await upsertAcomp.mutateAsync({
+        agendamento_id: event.id,
+        paciente_nome: event.Nome,
+        paciente_telefone: event["Número"],
+        data_inicio: new Date().toISOString().slice(0, 10),
+        status: "em_andamento",
+      });
+      if (created) {
+        setAcompSelected(created);
+        setAcompOpen(true);
+        toast.success("Acompanhamento criado!");
+      }
+    } catch (e: any) {
+      toast.error("Erro: " + (e?.message || ""));
     }
   };
 
@@ -223,7 +255,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
               <Button type="button" variant="outline" onClick={() => setAnamneseOpen(true)}>
                 <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
               </Button>
-              <Button type="button" variant="outline" onClick={() => { onOpenChange(false); toast.info("Abra a aba Acompanhamento para gerenciar fotos."); }}>
+              <Button type="button" variant="outline" onClick={handleOpenAcompanhamento} disabled={upsertAcomp.isPending}>
                 <Camera className="mr-2 h-4 w-4" /> Acompanhamento
               </Button>
             </div>
@@ -234,6 +266,12 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
           onOpenChange={setAnamneseOpen}
           agendamentoId={event.id}
           pacienteNome={event.Nome}
+          pacienteTelefone={event["Número"]}
+        />
+        <AcompanhamentoDetailDialog
+          open={acompOpen}
+          onOpenChange={setAcompOpen}
+          acompanhamento={acompSelected}
         />
       </DialogContent>
     </Dialog>
