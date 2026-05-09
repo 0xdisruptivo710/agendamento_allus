@@ -38,6 +38,7 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
   const [respAtendimento, setRespAtendimento] = useState("");
   const [tipo, setTipo] = useState<string>("");
   const [procedimento, setProcedimento] = useState<string>("");
+  const [anamneseOpen, setAnamneseOpen] = useState(false);
   const updateMutation = useUpdateAgendamento();
   const { agendamento: respAgList, atendimento: respAtList } = useResponsaveis();
 
