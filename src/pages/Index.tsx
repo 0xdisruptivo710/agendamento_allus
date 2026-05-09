@@ -1,13 +1,14 @@
 import { useMemo, useState } from "react";
 import { addDays, addMonths, addWeeks, isToday, subDays, subMonths, subWeeks } from "date-fns";
 import { motion } from "framer-motion";
-import { AlertCircle, BarChart3, CalendarDays, CheckCircle, Loader2, Users } from "lucide-react";
+import { AlertCircle, BarChart3, CalendarDays, CheckCircle, Loader2, Users, UserCog } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CalendarHeader } from "@/components/calendar/CalendarHeader";
 import { DayView } from "@/components/calendar/DayView";
 import { EventDetailDialog } from "@/components/calendar/EventDetailDialog";
 import { MonthView } from "@/components/calendar/MonthView";
 import { ReportsView } from "@/components/calendar/ReportsView";
+import { ResponsaveisView } from "@/components/calendar/ResponsaveisView";
 import { UpcomingAppointmentsPanel } from "@/components/calendar/UpcomingAppointmentsPanel";
 import { WeekView } from "@/components/calendar/WeekView";
 import { useAgendamentos, type Agendamento } from "@/hooks/useAgendamentos";
@@ -92,6 +93,9 @@ const Index = () => {
             <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
               <BarChart3 className="mr-2 h-4 w-4" /> Relatórios
             </TabsTrigger>
+            <TabsTrigger value="responsaveis" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <UserCog className="mr-2 h-4 w-4" /> Responsáveis
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="agenda" className="space-y-6 mt-0">
@@ -117,6 +121,10 @@ const Index = () => {
 
           <TabsContent value="reports" className="mt-0">
             <ReportsView agendamentos={agendamentos || []} />
+          </TabsContent>
+
+          <TabsContent value="responsaveis" className="mt-0">
+            <ResponsaveisView />
           </TabsContent>
         </Tabs>
 
