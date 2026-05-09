@@ -15,10 +15,12 @@ interface Props {
   initial?: Partial<Anamnese> | null;
   agendamentoId?: number | null;
   pacienteNome?: string | null;
+  pacienteTelefone?: string | null;
 }
 
 const empty: Partial<Anamnese> = {
   paciente_nome: "",
+  paciente_telefone: "",
   data_anamnese: new Date().toISOString().slice(0, 10),
   queixa_principal: "",
   historico_saude: "",
@@ -34,7 +36,7 @@ const empty: Partial<Anamnese> = {
   observacoes: "",
 };
 
-export function AnamneseFormDialog({ open, onOpenChange, initial, agendamentoId, pacienteNome }: Props) {
+export function AnamneseFormDialog({ open, onOpenChange, initial, agendamentoId, pacienteNome, pacienteTelefone }: Props) {
   const [form, setForm] = useState<Partial<Anamnese>>(empty);
   const upsert = useUpsertAnamnese();
 
@@ -44,10 +46,11 @@ export function AnamneseFormDialog({ open, onOpenChange, initial, agendamentoId,
         ...empty,
         ...(initial || {}),
         paciente_nome: initial?.paciente_nome || pacienteNome || "",
+        paciente_telefone: initial?.paciente_telefone || pacienteTelefone || "",
         agendamento_id: initial?.agendamento_id ?? agendamentoId ?? null,
       });
     }
-  }, [open, initial, agendamentoId, pacienteNome]);
+  }, [open, initial, agendamentoId, pacienteNome, pacienteTelefone]);
 
   const set = <K extends keyof Anamnese>(k: K, v: Anamnese[K]) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -78,10 +81,14 @@ export function AnamneseFormDialog({ open, onOpenChange, initial, agendamentoId,
             <Input value={form.paciente_nome || ""} onChange={(e) => set("paciente_nome", e.target.value)} className="bg-secondary/50" />
           </div>
           <div className="space-y-1.5">
+            <Label className="text-xs font-semibold">Telefone</Label>
+            <Input value={form.paciente_telefone || ""} onChange={(e) => set("paciente_telefone", e.target.value)} placeholder="(19) 99999-9999" className="bg-secondary/50" />
+          </div>
+          <div className="space-y-1.5">
             <Label className="text-xs font-semibold">Data</Label>
             <Input type="date" value={form.data_anamnese || ""} onChange={(e) => set("data_anamnese", e.target.value)} className="bg-secondary/50" />
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 sm:col-span-2">
             <Label className="text-xs font-semibold">Tipo de pele</Label>
             <Input value={form.tipo_pele || ""} onChange={(e) => set("tipo_pele", e.target.value)} placeholder="Oleosa, mista, seca..." className="bg-secondary/50" />
           </div>

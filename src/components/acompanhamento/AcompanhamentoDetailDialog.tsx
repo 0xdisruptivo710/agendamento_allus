@@ -128,6 +128,9 @@ export function AcompanhamentoDetailDialog({ open, onOpenChange, acompanhamento 
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto border-border bg-popover">
         <DialogHeader>
           <DialogTitle className="gradient-text">Acompanhamento — {acompanhamento.paciente_nome || "Paciente"}</DialogTitle>
+          {acompanhamento.paciente_telefone && (
+            <p className="text-xs text-primary">📱 {acompanhamento.paciente_telefone}</p>
+          )}
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">

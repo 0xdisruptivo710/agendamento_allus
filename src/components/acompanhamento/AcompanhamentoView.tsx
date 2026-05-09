@@ -20,6 +20,7 @@ export function AcompanhamentoView() {
   const del = useDeleteAcompanhamento();
   const [search, setSearch] = useState("");
   const [newName, setNewName] = useState("");
+  const [newPhone, setNewPhone] = useState("");
   const [selected, setSelected] = useState<Acompanhamento | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -37,8 +38,14 @@ export function AcompanhamentoView() {
       return;
     }
     try {
-      const created = await upsert.mutateAsync({ paciente_nome: newName.trim(), data_inicio: today, status: "em_andamento" });
+      const created = await upsert.mutateAsync({
+        paciente_nome: newName.trim(),
+        paciente_telefone: newPhone.trim() || null,
+        data_inicio: today,
+        status: "em_andamento",
+      });
       setNewName("");
+      setNewPhone("");
       toast.success("Acompanhamento criado!");
       if (created) {
         setSelected(created);
@@ -73,7 +80,8 @@ export function AcompanhamentoView() {
       </div>
 
       <div className="glass-card flex flex-col gap-2 rounded-2xl p-4 sm:flex-row sm:items-center">
-        <Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Nome do paciente para novo acompanhamento" className="bg-secondary/50" />
+        <Input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Nome do paciente" className="bg-secondary/50" />
+        <Input value={newPhone} onChange={(e) => setNewPhone(e.target.value)} placeholder="Telefone" className="bg-secondary/50 sm:w-52" />
         <Button onClick={handleCreate} disabled={upsert.isPending} className="bg-primary text-primary-foreground hover:bg-primary/90">
           <Plus className="mr-2 h-4 w-4" /> Criar
         </Button>
@@ -102,6 +110,9 @@ export function AcompanhamentoView() {
                 <div className="mb-2 flex items-start justify-between gap-2">
                   <div>
                     <p className="text-sm font-bold text-foreground">{a.paciente_nome || "Sem nome"}</p>
+                    {a.paciente_telefone && (
+                      <p className="text-[11px] text-primary">{a.paciente_telefone}</p>
+                    )}
                     <p className="text-[11px] text-muted-foreground">
                       Início: {a.data_inicio ? format(new Date(a.data_inicio + "T00:00:00"), "dd/MM/yyyy", { locale: ptBR }) : "—"}
                     </p>
