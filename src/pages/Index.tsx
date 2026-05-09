@@ -21,6 +21,7 @@ const Index = () => {
   const [view, setView] = useState<"month" | "week" | "day">("month");
   const [selectedEvent, setSelectedEvent] = useState<Agendamento | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("agenda");
   const { data: agendamentos, isLoading } = useAgendamentos();
 
   const handlePrev = () => {
