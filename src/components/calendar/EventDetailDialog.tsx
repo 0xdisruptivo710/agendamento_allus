@@ -225,17 +225,6 @@ export function EventDetailDialog({ event, open, onOpenChange }: EventDetailDial
             <ProcedimentoCombobox value={procedimento} onChange={setProcedimento} />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="glass-card rounded-xl p-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">1 dia antes</span>
-              <p className="mt-1 text-xs text-foreground/80">{event["1 Dia antes"] || "—"}</p>
-            </div>
-            <div className="glass-card rounded-xl p-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">No dia</span>
-              <p className="mt-1 text-xs text-foreground/80">{event["No dia"] || "—"}</p>
-            </div>
-          </div>
-
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <StickyNote className="h-4 w-4 text-green-400" />
