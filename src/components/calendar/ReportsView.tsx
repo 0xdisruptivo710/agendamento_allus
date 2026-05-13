@@ -126,10 +126,10 @@ export function ReportsView({ agendamentos }: ReportsViewProps) {
       {/* KPIs */}
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
         {[
-          { label: "Total vendido", value: formatCurrency(totalVendas), icon: DollarSign, color: "text-green-400" },
+          { label: "Total vendido", value: formatCurrency(totalVendas), icon: DollarSign, color: "text-primary" },
           { label: "Agendamentos", value: totalAgendamentos, icon: ClipboardList, color: "text-primary" },
-          { label: "Ticket médio", value: formatCurrency(ticketMedio), icon: TrendingUp, color: "text-emerald-400" },
-          { label: `Vendas em ${format(dayDate, "dd/MM")}`, value: formatCurrency(vendasDoDia), icon: DollarSign, color: "text-green-500" },
+          { label: "Ticket médio", value: formatCurrency(ticketMedio), icon: TrendingUp, color: "text-primary" },
+          { label: `Vendas em ${format(dayDate, "dd/MM")}`, value: formatCurrency(vendasDoDia), icon: DollarSign, color: "text-primary" },
         ].map((s) => (
           <div key={s.label} className="glass-card flex items-center gap-3 rounded-2xl p-4">
             <s.icon className={`h-5 w-5 ${s.color}`} />
@@ -162,11 +162,11 @@ export function ReportsView({ agendamentos }: ReportsViewProps) {
           </div>
           <div className="rounded-xl border border-border bg-secondary/40 p-3">
             <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Vendas</p>
-            <p className="text-xl font-extrabold text-green-400">{formatCurrency(vendasDoDia)}</p>
+            <p className="text-xl font-extrabold text-primary">{formatCurrency(vendasDoDia)}</p>
           </div>
           <div className="rounded-xl border border-border bg-secondary/40 p-3">
             <p className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">Ticket médio</p>
-            <p className="text-xl font-extrabold text-emerald-400">
+            <p className="text-xl font-extrabold text-primary">
               {formatCurrency(doDia.length > 0 ? vendasDoDia / doDia.length : 0)}
             </p>
           </div>

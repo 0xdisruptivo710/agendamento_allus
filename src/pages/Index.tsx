@@ -75,7 +75,7 @@ const Index = () => {
           {[
             { label: "Total", value: stats.total, icon: CalendarDays, color: "text-primary", bg: "bg-secondary" },
             { label: "Hoje", value: stats.today, icon: Users, color: "text-primary", bg: "bg-secondary" },
-            { label: "Confirmados", value: stats.confirmed, icon: CheckCircle, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+            { label: "Confirmados", value: stats.confirmed, icon: CheckCircle, color: "text-primary", bg: "bg-secondary" },
             { label: "Pendentes", value: stats.pending, icon: AlertCircle, color: "text-muted-foreground", bg: "bg-muted" },
           ].map((stat) => (
             <div key={stat.label} className="glass-card flex items-center gap-3 rounded-xl px-5 py-4">

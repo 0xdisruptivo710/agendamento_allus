@@ -72,9 +72,6 @@ export default {
           400: "hsl(var(--dark-400))",
           500: "hsl(var(--dark-500))",
         },
-        emerald: {
-          400: "hsl(var(--emerald-400))",
-        },
         slate: {
           100: "hsl(var(--slate-100))",
           200: "hsl(var(--slate-200))",

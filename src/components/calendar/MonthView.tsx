@@ -24,9 +24,8 @@ interface MonthViewProps {
 function getConfirmationColor(confirmacao: string | null) {
   if (!confirmacao) return "bg-muted text-foreground";
   const lower = confirmacao.toLowerCase();
-  if (lower.includes("confirm") || lower.includes("ok")) return "bg-emerald-400/15 text-emerald-400";
+  if (lower.includes("confirm") || lower.includes("ok")) return "bg-primary/12 text-primary";
   if (lower.includes("cancel") || lower.includes("desmarc")) return "bg-destructive/10 text-destructive";
-  if (lower.includes("reagend")) return "bg-secondary text-primary";
   return "bg-secondary text-primary";
 }
 
