@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
-import { PROCEDIMENTOS_ESTETICOS } from "@/lib/procedimentos";
+import { useProcedimentos } from "@/hooks/useProcedimentos";
 
 interface ProcedimentoComboboxProps {
   value: string;
@@ -13,6 +13,7 @@ interface ProcedimentoComboboxProps {
 
 export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxProps) {
   const [open, setOpen] = useState(false);
+  const { list: procedimentos } = useProcedimentos();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -49,7 +50,7 @@ export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxPr
           <CommandList className="max-h-64">
             <CommandEmpty>Nenhum procedimento encontrado.</CommandEmpty>
             <CommandGroup>
-              {PROCEDIMENTOS_ESTETICOS.map((proc) => (
+              {procedimentos.map((proc) => (
                 <CommandItem
                   key={proc}
                   value={proc}
