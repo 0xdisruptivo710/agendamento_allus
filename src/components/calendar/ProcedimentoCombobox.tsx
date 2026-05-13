@@ -75,7 +75,12 @@ export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxPr
               onValueChange={setSearch}
             />
           </div>
-          <CommandList className="max-h-64">
+          <CommandList
+            className="max-h-64 overflow-y-auto overscroll-contain"
+            onWheel={(e) => {
+              e.currentTarget.scrollTop += e.deltaY;
+            }}
+          >
             <CommandEmpty>Nenhum procedimento encontrado.</CommandEmpty>
             <CommandGroup>
               {procedimentos.map((proc) => (
