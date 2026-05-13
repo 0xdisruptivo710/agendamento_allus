@@ -24,9 +24,9 @@ export interface AcompanhamentoFoto {
   nota: string | null;
 }
 
-const T_ACOMP = "Acompanhamento_DrColageno_Piracicaba" as const;
-const T_FOTOS = "Acompanhamento_Fotos_DrColageno_Piracicaba" as const;
-const BUCKET = "acompanhamento-fotos";
+const T_ACOMP = "itupevaclinics_acompanhamento" as const;
+const T_FOTOS = "itupevaclinics_acompanhamento_fotos" as const;
+const BUCKET = "itupevaclinics-acompanhamento-fotos";
 
 export function useAcompanhamentos() {
   return useQuery({

@@ -99,7 +99,7 @@ export function AcompanhamentoDetailDialog({ open, onOpenChange, acompanhamento 
       ctx.fillStyle = "#86efac";
       ctx.font = "bold 28px sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("Dr. Colágeno Piracicaba — Antes e Depois", W / 2, 50);
+      ctx.fillText("Aios Clinics Itupeva — Antes e Depois", W / 2, 50);
       ctx.font = "bold 22px sans-serif";
       ctx.fillStyle = "#ffffff";
       ctx.fillText(acompanhamento.paciente_nome || "Paciente", W / 2, 82);

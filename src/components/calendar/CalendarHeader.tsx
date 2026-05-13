@@ -21,7 +21,7 @@ export function CalendarHeader({ currentDate, view, onPrev, onNext, onToday, onV
           <h1 className="text-[22px] font-semibold tracking-tight text-foreground">Painel Agendamento</h1>
         </div>
         <span className="hidden sm:inline text-sm text-muted-foreground">·</span>
-        <span className="hidden sm:inline text-sm font-medium text-muted-foreground">Dr Colágeno Piracicaba</span>
+        <span className="hidden sm:inline text-sm font-medium text-muted-foreground">Aios Clinics — Itupeva</span>
         <h2 className="basis-full sm:basis-auto text-base font-medium text-muted-foreground capitalize">
           {format(currentDate, view === "day" ? "dd 'de' MMMM, yyyy" : "MMMM yyyy", { locale: ptBR })}
         </h2>

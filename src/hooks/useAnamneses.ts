@@ -22,7 +22,7 @@ export interface Anamnese {
   observacoes: string | null;
 }
 
-const TABLE = "Anamnese_DrColageno_Piracicaba" as const;
+const TABLE = "itupevaclinics_anamnese" as const;
 
 export function useAnamneses() {
   return useQuery({

@@ -17,7 +17,7 @@ interface ResponsavelRow {
   tipo: TipoResponsavel;
 }
 
-const TABLE = "Responsaveis_DrColageno_Piracicaba" as const;
+const TABLE = "itupevaclinics_responsaveis" as const;
 const QUERY_KEY = ["responsaveis"] as const;
 
 const LEGACY_STORAGE_KEY = "drcolageno_responsaveis_v1";

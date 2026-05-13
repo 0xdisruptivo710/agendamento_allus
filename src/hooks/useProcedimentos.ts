@@ -10,7 +10,7 @@ interface ProcedimentoRow {
   ordem: number;
 }
 
-const TABLE = "Procedimentos_DrColageno_Piracicaba" as const;
+const TABLE = "itupevaclinics_procedimentos" as const;
 
 export function useProcedimentos() {
   const query = useQuery({
