@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Check, ChevronsUpDown, Search, X } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2, Plus, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
 import { cn } from "@/lib/utils";
-import { useProcedimentos } from "@/hooks/useProcedimentos";
+import { useAddProcedimento, useProcedimentos } from "@/hooks/useProcedimentos";
 
 interface ProcedimentoComboboxProps {
   value: string;
@@ -13,10 +13,33 @@ interface ProcedimentoComboboxProps {
 
 export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxProps) {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const { list: procedimentos } = useProcedimentos();
+  const { mutateAsync: addProcedimento, isPending: adding } = useAddProcedimento();
+
+  const trimmed = search.trim();
+  const hasExactMatch = trimmed.length > 0 && procedimentos.some((p) => p.toLowerCase() === trimmed.toLowerCase());
+  const canAdd = trimmed.length > 0 && !hasExactMatch && !adding;
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    if (!next) setSearch("");
+  };
+
+  const handleAdd = async () => {
+    if (!canAdd) return;
+    try {
+      const novo = await addProcedimento(trimmed);
+      onChange(novo);
+      setSearch("");
+      setOpen(false);
+    } catch {
+      // erro silencioso — UI mantém estado, usuário pode tentar de novo
+    }
+  };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -45,7 +68,12 @@ export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxPr
         <Command>
           <div className="flex items-center border-b px-3">
             <Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
-            <CommandInput placeholder="Pesquisar procedimento..." className="border-0 focus:ring-0" />
+            <CommandInput
+              placeholder="Pesquisar ou adicionar..."
+              className="border-0 focus:ring-0"
+              value={search}
+              onValueChange={setSearch}
+            />
           </div>
           <CommandList className="max-h-64">
             <CommandEmpty>Nenhum procedimento encontrado.</CommandEmpty>
@@ -65,6 +93,19 @@ export function ProcedimentoCombobox({ value, onChange }: ProcedimentoComboboxPr
               ))}
             </CommandGroup>
           </CommandList>
+          {canAdd && (
+            <div className="border-t border-border p-1">
+              <button
+                type="button"
+                onClick={handleAdd}
+                disabled={adding}
+                className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm text-primary hover:bg-accent hover:text-accent-foreground disabled:opacity-60"
+              >
+                {adding ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
+                <span className="truncate">Adicionar "{trimmed}"</span>
+              </button>
+            </div>
+          )}
         </Command>
       </PopoverContent>
     </Popover>
