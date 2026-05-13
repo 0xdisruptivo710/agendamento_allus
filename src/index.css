@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,64 +6,79 @@
 
 @layer base {
   :root {
-    --background: 150 10% 96%;
-    --foreground: 160 20% 10%;
+    /* Aios CRM — light theme */
+
+    /* Surfaces */
+    --background: 220 22% 97%;
+    --foreground: 220 39% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 160 20% 10%;
+    --card-foreground: 220 39% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 160 20% 10%;
+    --popover-foreground: 220 39% 11%;
 
-    --primary: 163 50% 28%;
+    /* Primary (purple CTA) */
+    --primary: 245 75% 59%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 150 10% 94%;
-    --secondary-foreground: 160 20% 10%;
+    /* Secondary (soft purple accent / chip selected) */
+    --secondary: 244 90% 96%;
+    --secondary-foreground: 245 75% 59%;
 
-    --muted: 150 10% 94%;
-    --muted-foreground: 160 10% 45%;
+    /* Muted (hover / selected gray) */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
-    --accent: 163 50% 22%;
-    --accent-foreground: 160 50% 95%;
+    /* Accent */
+    --accent: 244 90% 96%;
+    --accent-foreground: 245 75% 59%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 150 12% 88%;
-    --input: 150 12% 88%;
-    --ring: 163 50% 28%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 245 75% 59%;
 
     --radius: 0.75rem;
 
+    /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 160 20% 10%;
-    --sidebar-primary: 163 50% 28%;
+    --sidebar-foreground: 220 39% 11%;
+    --sidebar-primary: 245 75% 59%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 150 10% 94%;
-    --sidebar-accent-foreground: 160 20% 10%;
-    --sidebar-border: 150 12% 88%;
-    --sidebar-ring: 163 50% 28%;
+    --sidebar-accent: 244 90% 96%;
+    --sidebar-accent-foreground: 245 75% 59%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 245 75% 59%;
 
-    /* Custom tokens — green & dark palette */
-    --green-300: 163 40% 65%;
-    --green-400: 163 45% 45%;
-    --green-500: 163 50% 28%;
-    --green-600: 163 55% 20%;
-    --dark-300: 160 10% 30%;
-    --dark-400: 160 12% 22%;
-    --dark-500: 160 15% 15%;
-    --emerald-400: 163 50% 38%;
-    --slate-100: 150 10% 96%;
-    --slate-200: 150 12% 88%;
-    --slate-300: 150 10% 78%;
-    --slate-500: 160 10% 45%;
+    /* Legacy "green" tokens — now redirected to the Aios purple ramp.
+       Components still reference text-green-400 / bg-green-500 etc. */
+    --green-300: 244 90% 96%;
+    --green-400: 247 76% 60%;
+    --green-500: 245 75% 59%;
+    --green-600: 245 60% 48%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(163 50% 28%), hsl(160 15% 15%));
-    --gradient-primary-hover: linear-gradient(135deg, hsl(163 45% 45%), hsl(160 12% 22%));
-    --shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.06);
-    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.04);
-    --shadow-glow: 0 0 24px rgba(22, 101, 78, 0.15);
+    /* Status accents */
+    --emerald-400: 142 70% 49%;  /* success (#25D366 — WA green) */
+
+    /* Neutral / gray ramp */
+    --dark-300: 218 11% 65%;
+    --dark-400: 220 9% 46%;
+    --dark-500: 220 39% 11%;
+
+    --slate-100: 220 22% 97%;
+    --slate-200: 220 13% 91%;
+    --slate-300: 218 11% 65%;
+    --slate-500: 220 9% 46%;
+
+    /* Gradients & shadows — quiet, Aios-style */
+    --gradient-primary: linear-gradient(135deg, hsl(247 76% 60%), hsl(245 60% 48%));
+    --gradient-primary-hover: linear-gradient(135deg, hsl(247 80% 64%), hsl(245 65% 52%));
+    --shadow-soft: 0 2px 12px rgba(17, 24, 39, 0.04);
+    --shadow-card: 0 1px 3px rgba(17, 24, 39, 0.04);
+    --shadow-glow: 0 4px 16px rgba(79, 70, 229, 0.12);
   }
 }
 
@@ -74,15 +89,14 @@
 
   body {
     @apply bg-background text-foreground font-display;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
   }
 }
 
 @layer utilities {
   .gradient-text {
-    background: linear-gradient(to right, hsl(var(--green-500)), hsl(var(--dark-400)));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: hsl(var(--foreground));
   }
 
   .glass-panel {
@@ -98,6 +112,6 @@
   }
 
   .glow-border {
-    box-shadow: 0 0 0 1px hsl(var(--green-400) / 0.3), var(--shadow-glow);
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.25), var(--shadow-glow);
   }
 }

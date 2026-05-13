@@ -15,14 +15,14 @@ interface CalendarHeaderProps {
 export function CalendarHeader({ currentDate, view, onPrev, onNext, onToday, onViewChange }: CalendarHeaderProps) {
   return (
     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
         <div className="flex items-center gap-2">
-          <Calendar className="w-6 h-6 text-green-400" />
-          <h1 className="text-2xl font-bold gradient-text">Painel Agendamento</h1>
+          <Calendar className="w-5 h-5 text-primary" />
+          <h1 className="text-[22px] font-semibold tracking-tight text-foreground">Painel Agendamento</h1>
         </div>
-        <span className="hidden sm:inline text-sm font-medium text-muted-foreground">|</span>
-        <span className="hidden sm:inline text-sm font-semibold text-accent-foreground">Dr Colágeno Piracicaba</span>
-        <h2 className="text-xl font-semibold text-foreground capitalize">
+        <span className="hidden sm:inline text-sm text-muted-foreground">·</span>
+        <span className="hidden sm:inline text-sm font-medium text-muted-foreground">Dr Colágeno Piracicaba</span>
+        <h2 className="basis-full sm:basis-auto text-base font-medium text-muted-foreground capitalize">
           {format(currentDate, view === "day" ? "dd 'de' MMMM, yyyy" : "MMMM yyyy", { locale: ptBR })}
         </h2>
       </div>
@@ -32,7 +32,6 @@ export function CalendarHeader({ currentDate, view, onPrev, onNext, onToday, onV
           variant="outline"
           size="sm"
           onClick={onToday}
-          className="border-border bg-card text-foreground hover:bg-primary/10 hover:border-primary/40 transition-all"
         >
           Hoje
         </Button>
@@ -41,7 +40,7 @@ export function CalendarHeader({ currentDate, view, onPrev, onNext, onToday, onV
             variant="ghost"
             size="icon"
             onClick={onPrev}
-            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+            className="h-9 w-9 text-muted-foreground hover:text-foreground"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -49,19 +48,19 @@ export function CalendarHeader({ currentDate, view, onPrev, onNext, onToday, onV
             variant="ghost"
             size="icon"
             onClick={onNext}
-            className="h-8 w-8 text-muted-foreground hover:text-primary hover:bg-primary/10"
+            className="h-9 w-9 text-muted-foreground hover:text-foreground"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
-        <div className="flex glass-card rounded-lg overflow-hidden">
+        <div className="flex items-center gap-1 rounded-full border border-border bg-card p-1">
           {(["month", "week", "day"] as const).map((v) => (
             <button
               key={v}
               onClick={() => onViewChange(v)}
-              className={`px-3 py-1.5 text-xs font-semibold transition-all capitalize ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors capitalize ${
                 view === v
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-secondary text-primary"
                   : "text-muted-foreground hover:text-foreground"
               }`}
             >

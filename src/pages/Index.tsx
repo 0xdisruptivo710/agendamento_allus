@@ -73,16 +73,18 @@ const Index = () => {
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 grid grid-cols-2 gap-3 md:grid-cols-4">
           {[
-            { label: "Total", value: stats.total, icon: CalendarDays, color: "text-primary" },
-            { label: "Hoje", value: stats.today, icon: Users, color: "text-green-400" },
-            { label: "Confirmados", value: stats.confirmed, icon: CheckCircle, color: "text-emerald-400" },
-            { label: "Pendentes", value: stats.pending, icon: AlertCircle, color: "text-dark-300" },
+            { label: "Total", value: stats.total, icon: CalendarDays, color: "text-primary", bg: "bg-secondary" },
+            { label: "Hoje", value: stats.today, icon: Users, color: "text-primary", bg: "bg-secondary" },
+            { label: "Confirmados", value: stats.confirmed, icon: CheckCircle, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+            { label: "Pendentes", value: stats.pending, icon: AlertCircle, color: "text-muted-foreground", bg: "bg-muted" },
           ].map((stat) => (
-            <div key={stat.label} className="glass-card flex items-center gap-3 rounded-2xl p-4">
-              <stat.icon className={`h-5 w-5 ${stat.color}`} />
+            <div key={stat.label} className="glass-card flex items-center gap-3 rounded-xl px-5 py-4">
+              <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${stat.bg}`}>
+                <stat.icon className={`h-5 w-5 ${stat.color}`} />
+              </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{stat.label}</p>
-                <p className={`text-xl font-extrabold ${stat.color}`}>{stat.value}</p>
+                <p className="text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">{stat.label}</p>
+                <p className="text-2xl font-semibold text-foreground">{stat.value}</p>
               </div>
             </div>
           ))}
@@ -90,24 +92,36 @@ const Index = () => {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <div className="flex items-center justify-between mb-4">
-            <TabsList className="bg-card border border-border">
-              <TabsTrigger value="agenda" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+            <TabsList className="h-auto gap-1 bg-card border border-border rounded-full p-1">
+              <TabsTrigger
+                value="agenda"
+                className="rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none"
+              >
                 <CalendarDays className="mr-2 h-4 w-4" /> Agenda
               </TabsTrigger>
-              <TabsTrigger value="reports" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger
+                value="reports"
+                className="rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none"
+              >
                 <BarChart3 className="mr-2 h-4 w-4" /> Relatórios
               </TabsTrigger>
-              <TabsTrigger value="anamnese" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger
+                value="anamnese"
+                className="rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none"
+              >
                 <ClipboardList className="mr-2 h-4 w-4" /> Anamnese
               </TabsTrigger>
-              <TabsTrigger value="acompanhamento" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+              <TabsTrigger
+                value="acompanhamento"
+                className="rounded-full px-4 py-1.5 text-sm font-medium text-muted-foreground data-[state=active]:bg-secondary data-[state=active]:text-primary data-[state=active]:shadow-none"
+              >
                 <Camera className="mr-2 h-4 w-4" /> Acompanhamento
               </TabsTrigger>
             </TabsList>
             <button
               onClick={() => setActiveTab("responsaveis")}
               title="Responsáveis"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
             >
               <UserCog className="h-4 w-4" />
             </button>

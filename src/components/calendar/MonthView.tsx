@@ -22,12 +22,12 @@ interface MonthViewProps {
 }
 
 function getConfirmationColor(confirmacao: string | null) {
-  if (!confirmacao) return "bg-secondary text-foreground";
+  if (!confirmacao) return "bg-muted text-foreground";
   const lower = confirmacao.toLowerCase();
-  if (lower.includes("confirm") || lower.includes("ok")) return "bg-green-400/20 text-green-500";
+  if (lower.includes("confirm") || lower.includes("ok")) return "bg-emerald-400/15 text-emerald-400";
   if (lower.includes("cancel") || lower.includes("desmarc")) return "bg-destructive/10 text-destructive";
-  if (lower.includes("reagend")) return "bg-green-300/15 text-green-400";
-  return "bg-green-300/20 text-green-400";
+  if (lower.includes("reagend")) return "bg-secondary text-primary";
+  return "bg-secondary text-primary";
 }
 
 export function MonthView({ currentDate, agendamentos, onEventClick, onDayClick }: MonthViewProps) {
