@@ -24,9 +24,9 @@ export interface AcompanhamentoFoto {
   nota: string | null;
 }
 
-const T_ACOMP = "itupevaclinics_acompanhamento" as const;
-const T_FOTOS = "itupevaclinics_acompanhamento_fotos" as const;
-const BUCKET = "itupevaclinics-acompanhamento-fotos";
+const T_ACOMP = "barradatijucaclinics_acompanhamento" as const;
+const T_FOTOS = "barradatijucaclinics_acompanhamento_fotos" as const;
+const BUCKET = "barradatijucaclinics-acompanhamento-fotos";
 
 export function useAcompanhamentos() {
   return useQuery({

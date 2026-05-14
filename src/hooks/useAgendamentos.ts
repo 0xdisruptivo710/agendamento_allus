@@ -24,7 +24,7 @@ export function useAgendamentos() {
     queryKey: ["agendamentos"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("itupevaclinics_agendamento")
+        .from("barradatijucaclinics_agendamento")
         .select("*");
 
       if (error) throw error;
@@ -40,7 +40,7 @@ export function useUpdateAgendamento() {
   return useMutation({
     mutationFn: async ({ id, updates }: { id: number; updates: Partial<Agendamento> }) => {
       const { data, error } = await supabase
-        .from("itupevaclinics_agendamento")
+        .from("barradatijucaclinics_agendamento")
         .update(updates)
         .eq("id", id)
         .select()

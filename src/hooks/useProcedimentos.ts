@@ -10,7 +10,7 @@ interface ProcedimentoRow {
   ordem: number;
 }
 
-const TABLE = "itupevaclinics_procedimentos" as const;
+const TABLE = "barradatijucaclinics_procedimentos" as const;
 const QUERY_KEY = ["procedimentos"] as const;
 
 export function useProcedimentos() {
