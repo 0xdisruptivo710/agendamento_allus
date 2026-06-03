@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import { ArrowRight, BadgeCheck, CircleDollarSign, Gauge, UserCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ranking, type Appointment } from "./data";
+import { formatBRL, sellerStats, type Appointment } from "./data";
 
 const PURPLE = "#5B4FE3";
 const EMERALD = "#10b981";
@@ -32,7 +32,7 @@ export function Relatorios({ appointments }: { appointments: Appointment[] }) {
     const taxaComp = decididos ? Math.round((compareceram / decididos) * 100) : 0;
     const taxaTd = compareceram ? Math.round((testDrives / compareceram) * 100) : 0;
     const taxaQual = total ? Math.round((qualificados / total) * 100) : 0;
-    return { total, compareceram, faltaram, pendentes, testDrives, qualificados, vendas, taxaComp, taxaTd, taxaQual };
+    return { total, compareceram, faltaram, pendentes, testDrives, qualificados, vendas, decididos, taxaComp, taxaTd, taxaQual };
   }, [appointments]);
 
   const situacao = [
@@ -41,13 +41,17 @@ export function Relatorios({ appointments }: { appointments: Appointment[] }) {
     { name: "Pendentes", value: m.pendentes, color: GRAY },
   ].filter((s) => s.value > 0);
 
-  const vendasPorVendedor = ranking.map((r) => ({ name: r.name.split(" ")[0], vendas: r.sales }));
+  const vendedores = useMemo(() => sellerStats(appointments), [appointments]);
+  const faturamento = vendedores.reduce((s, v) => s + v.faturamento, 0);
+  const vendasTotal = vendedores.reduce((s, v) => s + v.vendas, 0);
+  const ticket = vendasTotal ? faturamento / vendasTotal : 0;
+  const vendasPorVendedor = vendedores.map((v) => ({ name: v.name.split(" ")[0], vendas: v.vendas }));
 
   const stats = [
-    { label: "Taxa de comparecimento", value: `${m.taxaComp}%`, icon: UserCheck, tone: "emerald" as const },
+    { label: "Taxa de comparecimento", value: m.decididos ? `${m.taxaComp}%` : "—", icon: UserCheck, tone: "emerald" as const },
     { label: "Test drives realizados", value: `${m.testDrives}`, icon: Gauge, tone: "primary" as const },
     { label: "Clientes qualificados", value: `${m.qualificados}`, icon: BadgeCheck, tone: "primary" as const },
-    { label: "Ticket médio", value: "R$ 109k", icon: CircleDollarSign, tone: "emerald" as const },
+    { label: "Ticket médio", value: vendasTotal ? formatBRL(ticket) : "—", icon: CircleDollarSign, tone: "emerald" as const },
   ];
 
   const iconTone = {
@@ -97,18 +101,25 @@ export function Relatorios({ appointments }: { appointments: Appointment[] }) {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
         <div className="glass-card rounded-xl p-6">
           <h3 className="mb-1 font-heading text-lg font-semibold text-foreground">Vendas por vendedor</h3>
-          <p className="mb-4 text-sm text-muted-foreground">Total no mês</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={vendasPorVendedor} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
-              <XAxis dataKey="name" tickLine={false} axisLine={false} fontSize={12} stroke="#6b7280" />
-              <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="#6b7280" allowDecimals={false} />
-              <Tooltip
-                cursor={{ fill: "rgba(91,79,227,0.06)" }}
-                contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 13 }}
-              />
-              <Bar dataKey="vendas" fill={PURPLE} radius={[6, 6, 0, 0]} maxBarSize={48} />
-            </BarChart>
-          </ResponsiveContainer>
+          <p className="mb-4 text-sm text-muted-foreground">Vendas concluídas</p>
+          {vendasPorVendedor.length === 0 ? (
+            <div className="flex h-[260px] flex-col items-center justify-center gap-1 text-center text-muted-foreground">
+              <p className="text-sm">Sem vendas concluídas ainda.</p>
+              <p className="text-xs">Os dados aparecem quando agendamentos forem marcados como Concluído.</p>
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={vendasPorVendedor} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
+                <XAxis dataKey="name" tickLine={false} axisLine={false} fontSize={12} stroke="#6b7280" />
+                <YAxis tickLine={false} axisLine={false} fontSize={12} stroke="#6b7280" allowDecimals={false} />
+                <Tooltip
+                  cursor={{ fill: "rgba(91,79,227,0.06)" }}
+                  contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb", fontSize: 13 }}
+                />
+                <Bar dataKey="vendas" fill={PURPLE} radius={[6, 6, 0, 0]} maxBarSize={48} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         <div className="glass-card rounded-xl p-6">

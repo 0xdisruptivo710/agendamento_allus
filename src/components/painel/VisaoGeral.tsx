@@ -59,7 +59,7 @@ export function VisaoGeral({ appointments, onSelect }: Props) {
 
         {/* Ranking */}
         <div className="xl:col-span-4">
-          <Ranking />
+          <Ranking appointments={appointments} />
         </div>
       </div>
     </div>

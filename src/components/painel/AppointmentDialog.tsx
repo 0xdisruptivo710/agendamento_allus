@@ -9,6 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
@@ -125,6 +126,19 @@ export function AppointmentDialog({ appointment, open, onOpenChange, onSave }: P
             <ToggleRow label="Cliente compareceu" checked={draft.compareceu} onChange={(v) => set("compareceu", v)} />
             <ToggleRow label="Fez test drive" checked={draft.testDrive} onChange={(v) => set("testDrive", v)} />
             <ToggleRow label="Cliente qualificado" checked={draft.qualificado} onChange={(v) => set("qualificado", v)} />
+          </div>
+
+          <div className="grid gap-1.5">
+            <Label>Valor da venda (R$)</Label>
+            <Input
+              type="number"
+              min={0}
+              step={100}
+              value={draft.valor || ""}
+              onChange={(e) => set("valor", e.target.value === "" ? 0 : Math.max(0, Number(e.target.value) || 0))}
+              placeholder="0"
+            />
+            <p className="text-xs text-muted-foreground">Usado no faturamento e no ranking quando o status for Concluído.</p>
           </div>
 
           <div className="grid gap-1.5">

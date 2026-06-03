@@ -61,6 +61,7 @@ export function rowToAppointment(row: AllusRow): Appointment {
     testDrive: row["Test Drive"] === true,
     qualificado: row.Qualificado === true,
     observacoes: row["Anotações"] ?? "",
+    valor: typeof row.Valor === "number" ? row.Valor : 0,
   };
 }
 
@@ -75,5 +76,6 @@ export function appointmentToRow(a: Appointment): Record<string, unknown> {
     "Test Drive": a.testDrive,
     Qualificado: a.qualificado,
     "Anotações": a.observacoes || null,
+    Valor: a.valor || null,
   };
 }
