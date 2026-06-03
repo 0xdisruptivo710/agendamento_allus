@@ -43,7 +43,7 @@ export const STATUSES: Status[] = [
 
 export const TIPOS: Tipo[] = ["Test Drive", "Visita", "Avaliação de Troca", "Entrega", "Proposta"];
 
-export const SELLERS = ["Ana Silva", "Carlos Eduardo", "Felipe Rocha", "Mariana Teixeira"];
+export const SELLERS = ["Eduardo", "Giovanna", "Lucas", "Danilo (Líder)"];
 
 export const statusMeta: Record<Status, string> = {
   Agendado: "bg-secondary text-primary",
